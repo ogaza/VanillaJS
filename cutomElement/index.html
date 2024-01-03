@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Custom Elements</title>
-
     <!-- 
       defer means that the js file will be downloaded ater the whole DOM is ready
       module enables using the import/export syntax
@@ -12,11 +11,41 @@
     <script src="index.js" defer type="module"></script>
   </head>
   <body>
+    <h1>Page with custom elements</h1>
+    <p>
+      This is just a regular paragraph, which styling is not affected by the
+      styling from the template as the template is attached to the shadow DOM
+      not the main page's DOM
+    </p>
+    <!-- 
+      template is a tag, that can be accessed and modified through js 
+      for example, but is ignored by the browser while rendering the page
+    -->
+    <template id="my-element-template">
+      <!-- 
+        we will use this template as a markup for the 
+        custom component. this will also be used within 
+        the shadow DOM, so the styling here does not affect
+        the main page's styling
+
+        the same is in the opposite direction - styling
+        from the main page does not affect styling in the shadow DOM
+       -->
+      <style>
+        p {
+          background-color: lightgreen;
+        }
+      </style>
+      <section>
+        <p>this is some custom element</p>
+      </section>
+    </template>
+
     <!-- 
       we can use the custom lements directly in the html 
       we can use data attributes to pass some values to that
       elemenent instance
     -->
-    <my-other-element data-myproperty="my property value"></my-other-element>
+    <!-- <my-other-element data-myproperty="my property value"></my-other-element> -->
   </body>
 </html>
