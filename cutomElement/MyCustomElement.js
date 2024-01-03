@@ -15,6 +15,26 @@ export class MyElement extends HTMLElement {
     // and attach it to this element's DOM
     // we would get an error, as the DOM for the element (we do not
     // talk here about shadow DOM) does not exist yet
+
+    // to style an elemet we create an empty style node within the shadow DOM
+    const styles = document.createElement("style");
+    this.root.appendChild(styles);
+    // and we fill the style node with the content from
+    // the fetched css file
+    fetchCSS();
+
+    // fetch file with the component styling
+    async function fetchCSS() {
+      // we can improve the performance of this file load
+      // adding a link with prefetch to the main html file
+      // so when we make this request the browser will most probably
+      // already have the file
+      // <link rel="preload" href="/cutomElement/MyCustomElement.css" as="stylesheet">
+      const request = await fetch("/cutomElement/MyCustomElement.css");
+      const css = await request.text();
+
+      styles.textContent = css;
+    }
   }
 
   // lifecycle event handlers

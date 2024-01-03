@@ -9,6 +9,8 @@
       module enables using the import/export syntax
      -->
     <script src="index.js" defer type="module"></script>
+    <!-- here we prefetch css that later on will be required by a custom element -->
+    <link rel="preload" href="/cutomElement/MyCustomElement.css" as="style" />
   </head>
   <body>
     <h1>Page with custom elements</h1>
@@ -31,11 +33,6 @@
         the same is in the opposite direction - styling
         from the main page does not affect styling in the shadow DOM
        -->
-      <style>
-        p {
-          background-color: lightgreen;
-        }
-      </style>
       <section>
         <p>this is some custom element</p>
       </section>
