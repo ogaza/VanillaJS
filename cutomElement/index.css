@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+}
+
+/* 
+=================================================
+reset css 
+=================================================
+*/
+
+/* Preferred box-sizing value */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove list styles (bullets/numbers) */
+ol,
+ul,
+menu,
+summary {
+  list-style: none;
+}
+
+/* 
+=================================================
+reset css end
+=================================================
+*/

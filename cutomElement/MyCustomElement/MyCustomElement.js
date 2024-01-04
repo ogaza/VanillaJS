@@ -1,3 +1,5 @@
+import "../SubElement/SubElement.js";
+
 export class MyElement extends HTMLElement {
   // constructor is where we can set up initial state and event handlers
   // you can use params in the constructor to pass objects and functions
@@ -30,7 +32,9 @@ export class MyElement extends HTMLElement {
       // so when we make this request the browser will most probably
       // already have the file
       // <link rel="preload" href="/cutomElement/MyCustomElement.css" as="stylesheet">
-      const request = await fetch("/cutomElement/MyCustomElement.css");
+      const request = await fetch(
+        "/cutomElement/MyCustomElement/MyCustomElement.css"
+      );
       const css = await request.text();
 
       styles.textContent = css;
@@ -55,6 +59,12 @@ export class MyElement extends HTMLElement {
     const template = document.getElementById("my-element-template");
     const content = template.content.cloneNode(true);
     this.root.appendChild(content);
+
+    // we can create another custom sub element
+    // and attach it to the main element's shadow DOM
+    const subElem = document.createElement("sub-element");
+    const placeholder = this.root.querySelector(".my-element__placeholder");
+    placeholder.appendChild(subElem);
 
     // similarly, we have several ways in which we can apply styling
     // to a custom element
