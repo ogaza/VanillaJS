@@ -8,6 +8,19 @@ const Router = {
     // may not be the hefault home location, he can type sth like
     // mypage.com/someSubPath - so the deeplink
     Router.go(location.pathname);
+
+    // this is for handling user nawigation based on the history
+    // so when user clicks back for example
+    // this is no triggered when a user clicks navigation link
+    window.addEventListener("popstate", handlePopstate);
+    // handle location changed
+    window.addEventListener("locationChanged", handleWindowLocationChanged);
+
+    // window.onpopstate = function (event) {
+    //   alert(
+    //     `location: ${document.location}, state: ${JSON.stringify(event.state)}`
+    //   );
+    // };
   },
 
   go: function (route, addToHistory = true) {
@@ -30,6 +43,9 @@ const Router = {
       // second param is unused
       // the last one is the actual route
       history.pushState({ route }, "", route);
+      // publish a custom event
+      const event = new Event("locationChanged");
+      window.dispatchEvent(event);
     }
   }
 };
@@ -38,6 +54,27 @@ export default Router;
 
 function modifyAnchorBehaviour(anchor) {
   anchor.addEventListener("click", handleAnchorClicked);
+}
+
+function handleWindowLocationChanged(event) {
+  const url = location.href;
+  const pathname = location.pathname;
+  console.log(`window location changed to: ${url}`, pathname);
+}
+
+function handlePopstate(event) {
+  const url = location.href;
+  const pathname = location.pathname;
+
+  // we can also take the route from the data that we pushed
+  // to the history as a first param of the pushState function
+  const eventState = event.state;
+
+  console.log(`popstate: ${url}`, pathname, eventState);
+
+  // navigate to the route taken from history, but do nod modify the history
+  // therefore the socond arg here needs to be set to false
+  Router.go(eventState.route, false);
 }
 
 function handleAnchorClicked(event) {
