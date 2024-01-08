@@ -1,3 +1,12 @@
+// by registering a specific handler for DOMContentLoaded event
+// we have a place in which we can modify the DOM
+// being sure that all the DOM elements already exist
+window.addEventListener("DOMContentLoaded", handlePageLoaded);
+
+function handlePageLoaded(event) {
+  console.log("DOM loaded, here we can safely modify the page's content");
+}
+
 const options = {
   // by default once is false
   // once means that event handler is fired once and
