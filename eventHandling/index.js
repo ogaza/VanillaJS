@@ -5,6 +5,8 @@ window.addEventListener("DOMContentLoaded", handlePageLoaded);
 
 function handlePageLoaded(event) {
   console.log("DOM loaded, here we can safely modify the page's content");
+
+  app();
 }
 
 const options = {
@@ -22,18 +24,22 @@ const options = {
   passive: true
 };
 
-const button = document.querySelector("button");
-const paragraph = document.querySelector("p");
-
-// addEventListener uses the observer pattern
-// with this you can register many handlers
-// for the same event
-// this is the preferred way for registering event handlers
-// whenn you use onclick method for example
-// there will be only one event handler
-button.addEventListener("click", eventHandler, options);
-
+var button;
+var paragraph;
 var clickCounter = 0;
+
+function app() {
+  button = document.querySelector("button");
+  paragraph = document.querySelector("p");
+
+  // addEventListener uses the observer pattern
+  // with this you can register many handlers
+  // for the same event
+  // this is the preferred way for registering event handlers
+  // whenn you use onclick method for example
+  // there will be only one event handler
+  button.addEventListener("click", eventHandler, options);
+}
 
 function eventHandler(event) {
   console.log("button clicked");
