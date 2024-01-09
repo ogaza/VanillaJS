@@ -4,27 +4,19 @@ const Router = {
     // taggeg with a specific class
     document.querySelectorAll("a.navlink").forEach(modifyAnchorBehaviour);
 
-    // check the initial url - the location that the user types in the browser
-    // may not be the hefault home location, he can type sth like
-    // mypage.com/someSubPath - so the deeplink
-    Router.go(location.pathname);
-
     // this is for handling user nawigation based on the history
     // so when user clicks back for example
     // this is no triggered when a user clicks navigation link
     window.addEventListener("popstate", handlePopstate);
-    // handle location changed
-    window.addEventListener("locationChanged", handleWindowLocationChanged);
 
-    // window.onpopstate = function (event) {
-    //   alert(
-    //     `location: ${document.location}, state: ${JSON.stringify(event.state)}`
-    //   );
-    // };
+    // check the initial url - the location that the user types in the browser
+    // may not be the hefault home location, he can type sth like
+    // mypage.com/someSubPath - so the deeplink
+    Router.go(location.pathname);
   },
 
   go: function (route, addToHistory = true) {
-    console.log(`naviage to ${route}`);
+    // console.log(`naviage to ${route}`);
 
     // the following code is just for presentational purposes
     // it is not generic solution for every application
@@ -43,38 +35,32 @@ const Router = {
       // second param is unused
       // the last one is the actual route
       history.pushState({ route }, "", route);
-      // publish a custom event
-      const event = new Event("locationChanged");
-      window.dispatchEvent(event);
     }
+    // publish a custom event
+    const event = new Event("locationChanged");
+    window.dispatchEvent(event);
   }
 };
 
 export default Router;
 
-function modifyAnchorBehaviour(anchor) {
-  anchor.addEventListener("click", handleAnchorClicked);
-}
-
-function handleWindowLocationChanged(event) {
-  const url = location.href;
-  const pathname = location.pathname;
-  console.log(`window location changed to: ${url}`, pathname);
-}
-
 function handlePopstate(event) {
-  const url = location.href;
-  const pathname = location.pathname;
+  // const url = location.href;
+  // const pathname = location.pathname;
 
   // we can also take the route from the data that we pushed
   // to the history as a first param of the pushState function
   const eventState = event.state;
 
-  console.log(`popstate: ${url}`, pathname, eventState);
+  // console.log(`popstate: ${url}`, pathname, eventState);
 
   // navigate to the route taken from history, but do nod modify the history
   // therefore the socond arg here needs to be set to false
   Router.go(eventState.route, false);
+}
+
+function modifyAnchorBehaviour(anchor) {
+  anchor.addEventListener("click", handleAnchorClicked);
 }
 
 function handleAnchorClicked(event) {
@@ -90,19 +76,7 @@ function handleAnchorClicked(event) {
   // currentTarget is the actually for example clicked element
   // so it can be some sub element of for example button or link
 
-  console.log("link clicked, url:", url);
+  // console.log("link clicked, url:", url);
   // change the location using the go function
   Router.go(url);
 }
-
-// there are two ways of changing the page's content
-// one is to remove one content and put a new content
-// to the DOM based on user's actions
-// the other way is to show one part and hide the other parts
-// using the hidden attribute like
-// <section id="sectionOne"> ...
-// <section id="sectionTwo" hidden> ...
-// which is better?
-// it depends for example on the size of the application
-// its better to show/hide only in small ones
-// but do we always write big applications?
