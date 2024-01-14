@@ -10,7 +10,50 @@
       module enables using the import/export syntax
      -->
     <script src="index.js" defer type="module"></script>
+    <script>
+      window.addEventListener("DOMContentLoaded", startTheApp);
+
+      var currentTheme;
+
+      function startTheApp() {
+        currentTheme = window.matchMedia("(prefers-color-scheme: light)")
+          .matches
+          ? "light"
+          : "dark";
+
+        var button = document.querySelector("button");
+        button.addEventListener("click", handleClick);
+      }
+
+      function handleClick() {
+        switchTheColorScheme();
+      }
+
+      function switchTheColorScheme() {
+        var body = document.querySelector("body");
+
+        if (currentTheme === "light") {
+          body.className = "overriden-color-scheme--dark";
+        }
+
+        if (currentTheme === "dark") {
+          body.className = "overriden-color-scheme--light";
+        }
+
+        currentTheme = currentTheme === "light" ? "dark" : "light";
+      }
+    </script>
     <style>
+      .overriden-color-scheme--light {
+        background-color: lightgray;
+        color: darkslategrey;
+      }
+
+      .overriden-color-scheme--dark {
+        background-color: darkgreen;
+        color: lightcyan;
+      }
+
       @media (prefers-color-scheme: dark) {
         body {
           background-color: black;
@@ -26,5 +69,7 @@
       }
     </style>
   </head>
-  <body></body>
+  <body>
+    <button>Switch color scheme</button>
+  </body>
 </html>
