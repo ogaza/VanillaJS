@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Some Accessibility Things</title>
+
+    <!-- 
+      defer means that the js file will be downloaded ater the whole DOM is ready
+      module enables using the import/export syntax
+     -->
+    <script src="index.js" defer type="module"></script>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: black;
+          color: white;
+        }
+      }
+
+      @media (prefers-color-scheme: light) {
+        body {
+          background-color: lightgrey;
+          color: black;
+        }
+      }
+    </style>
+  </head>
+  <body></body>
+</html>
