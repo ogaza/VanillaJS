@@ -24,6 +24,27 @@ function addn(fns) {
   return composedFn();
 }
 
+const numbers = [5, 5, 1, 2, 2];
+console.log("numbers:", numbers);
+
+const uniqueNumbers = numbers.reduce(function unique(newList, num) {
+  if (newList.includes(num)) {
+    return newList;
+  }
+
+  return [...newList, num];
+}, []);
+
+console.log("unique numbers:", uniqueNumbers);
+
+// change the list of numbers into a list of functions
+// then
+// get the sum of the unique numbers
+// this is by suming the list of function values
+const sumOfUniqueNumbers = addn(uniqueNumbers.map(constant));
+
+console.log("sum of unique numbers:", sumOfUniqueNumbers);
+
 // recursive approach
 // notice here how the recursive call
 // fill the Proper Tail Call Position
