@@ -1,44 +1,24 @@
 window.addEventListener("DOMContentLoaded", startTheApp);
 
 let myName = "";
-let jsInput;
-let jsDiv;
-let vDOM;
-let needsUpdate = true;
 let interval = 15;
+
+const vDOM = [
+  ["input", myName, handle],
+  ["div", `Hello ${myName} :)`]
+];
 
 // the DOM is loaded
 function startTheApp() {
   console.log("the DOM is loaded, we can start the APP!");
-  // first render
-  updateDOM();
+
   // refresh the page every 15 miliseconds
   setInterval(updateDOM, interval);
 }
 
 function updateDOM() {
-  if (!needsUpdate) return;
-
-  var isFocused = document.activeElement == jsInput;
-
-  vDOM = createVDOM();
-  jsInput = convert(vDOM[0]);
-  jsDiv = convert(vDOM[1]);
-
-  document.body.replaceChildren(jsInput, jsDiv);
-
-  if (isFocused) {
-    jsInput.focus();
-  }
-
-  needsUpdate = false;
-}
-
-function createVDOM() {
-  return [
-    ["input", myName, handle],
-    ["div", `Hello ${myName} :)`]
-  ];
+  const elems = vDOM.map(convert);
+  document.body.replaceChildren(...elems);
 }
 
 function convert(node) {
@@ -50,7 +30,6 @@ function convert(node) {
   return elem;
 }
 
-function handle() {
-  myName = jsInput.value;
-  needsUpdate = true;
+function handle(e) {
+  myName = e.target.value;
 }
