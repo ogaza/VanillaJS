@@ -1,12 +1,16 @@
 window.addEventListener("DOMContentLoaded", startTheApp);
 
 let myName = "";
+let vDOM;
+let elems;
 let interval = 15;
 
-const vDOM = [
-  ["input", myName, handle],
-  ["div", `Hello ${myName} :)`]
-];
+function createVDOM() {
+  return [
+    ["input", myName, handle],
+    ["div", `Hello ${myName} :)`]
+  ];
+}
 
 // the DOM is loaded
 function startTheApp() {
@@ -17,7 +21,8 @@ function startTheApp() {
 }
 
 function updateDOM() {
-  const elems = vDOM.map(convert);
+  vDOM = createVDOM();
+  elems = vDOM.map(convert);
   document.body.replaceChildren(...elems);
 }
 
