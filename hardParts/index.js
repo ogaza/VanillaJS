@@ -4,6 +4,7 @@ let myName = "";
 let jsInput;
 let jsDiv;
 let vDOM;
+let needsUpdate = true;
 let interval = 15;
 
 // the DOM is loaded
@@ -16,6 +17,8 @@ function startTheApp() {
 }
 
 function updateDOM() {
+  if (!needsUpdate) return;
+
   var isFocused = document.activeElement == jsInput;
 
   vDOM = createVDOM();
@@ -27,6 +30,8 @@ function updateDOM() {
   if (isFocused) {
     jsInput.focus();
   }
+
+  needsUpdate = false;
 }
 
 function createVDOM() {
@@ -47,4 +52,5 @@ function convert(node) {
 
 function handle() {
   myName = jsInput.value;
+  needsUpdate = true;
 }
