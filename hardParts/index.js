@@ -5,6 +5,27 @@ let vDOM;
 let elems;
 let interval = 15;
 
+// this simple example
+// shows the ONE DIRECTION
+// of changing the data
+// representing the page model
+// into a page's DOM
+
+// what it means is that in order
+// to change how the page looks
+// in the browser
+// you chage the page model
+// instead of changing anything
+// in the DOM itself
+
+// once the page model is change
+// it is then transladed into the actual DOM
+// in a single place that is in the updateDOM
+// function
+
+// this function represents
+// the only place in which
+// we produce the page model
 function createVDOM() {
   return [
     ["input", myName, handle],
@@ -20,12 +41,17 @@ function startTheApp() {
   setInterval(updateDOM, interval);
 }
 
+// this is the only place
+// that renders the page
+// based on actual page model
 function updateDOM() {
   vDOM = createVDOM();
   elems = vDOM.map(convert);
   document.body.replaceChildren(...elems);
 }
 
+// this function changes an elemnt model
+// into a DOM element
 function convert(node) {
   const elem = document.createElement(node[0]);
   elem.textContent = node[1];
