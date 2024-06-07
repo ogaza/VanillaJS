@@ -23,6 +23,9 @@ let interval = 15;
 // in a single place that is in the updateDOM
 // function
 
+// additional resources:
+// https://github.com/UIHP-Challenges/UIHP-Challenges-April23/blob/main/README.md
+
 // this function represents
 // the only place in which
 // we produce the page model
