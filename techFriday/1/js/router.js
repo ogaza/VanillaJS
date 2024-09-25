@@ -16,4 +16,14 @@ function modifyAnchorBehaviour(anchor) {
 
 function handleAnchorClicked(event) {
   event.preventDefault();
+
+  // this will return the full url (with the host, etc)
+  // const url = event.target.href;
+  // therefore it maybe better to get the url as follows:
+  const url = event.target.getAttribute("href");
+  navigateToSelectedUrl(url);
+}
+
+function navigateToSelectedUrl(url) {
+  console.log("navigating to ", url);
 }
