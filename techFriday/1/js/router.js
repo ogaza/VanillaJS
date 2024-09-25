@@ -6,8 +6,17 @@ const Router = {
     // taggeg with a specific class
     document.querySelectorAll("a.navlink").forEach(modifyAnchorBehaviour);
   },
-  go: function (route) {
+  go: function (route, addToHistory = true) {
     console.log("navigating to ", route);
+
+    if (addToHistory) {
+      // we use the browser's api
+      // the first arg is data which can be anything
+      // we pass here an object with a selected route
+      // second param is unused
+      // the last one is the actual route
+      history.pushState({ route }, "", route);
+    }
 
     // publish a custom event
     const event = new Event("locationChanged");
