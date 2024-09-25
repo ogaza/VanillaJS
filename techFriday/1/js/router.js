@@ -5,6 +5,13 @@ const Router = {
     // use dom api to change the behaviour of all navigation links
     // taggeg with a specific class
     document.querySelectorAll("a.navlink").forEach(modifyAnchorBehaviour);
+  },
+  go: function (route) {
+    console.log("navigating to ", route);
+
+    // publish a custom event
+    const event = new Event("locationChanged");
+    window.dispatchEvent(event);
   }
 };
 
@@ -25,5 +32,5 @@ function handleAnchorClicked(event) {
 }
 
 function navigateToSelectedUrl(url) {
-  console.log("navigating to ", url);
+  Router.go(url);
 }
