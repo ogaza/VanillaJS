@@ -5,6 +5,11 @@ const Router = {
     // use dom api to change the behaviour of all navigation links
     // taggeg with a specific class
     document.querySelectorAll("a.navlink").forEach(modifyAnchorBehaviour);
+
+    // this is for handling user nawigation based on the history
+    // so when user clicks back for example
+    // this is no triggered when a user clicks navigation link
+    window.addEventListener("popstate", handlePopstate);
   },
   go: function (route, addToHistory = true) {
     console.log("navigating to ", route);
@@ -42,4 +47,20 @@ function handleAnchorClicked(event) {
 
 function navigateToSelectedUrl(url) {
   Router.go(url);
+}
+
+function handlePopstate(event) {
+  // we can take the path to navigate to from
+  // current location
+  // const url = location.href;
+  // const pathname = location.pathname;
+
+  // we can also take the route from the data that we pushed
+  // to the history as a first param of the pushState function
+  const { state } = event;
+  const { route } = state || { route: "" };
+
+  // navigate to the route taken from history, but do nod modify the history
+  // therefore the socond arg here needs to be set to false
+  Router.go(route, false);
 }
