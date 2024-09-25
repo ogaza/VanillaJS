@@ -10,6 +10,13 @@ const Router = {
     // so when user clicks back for example
     // this is no triggered when a user clicks navigation link
     window.addEventListener("popstate", handlePopstate);
+
+    // check the initial url - the location that the user types in the browser
+    // may not be the default home location, he can type sth like
+    // mypage.com/someSubPath - so the deeplink
+    // NOTE: this will work with the server redirecting
+    // requests to the sub page's to the app root url
+    Router.go(location.pathname);
   },
   go: function (route, addToHistory = true) {
     console.log("navigating to ", route);
