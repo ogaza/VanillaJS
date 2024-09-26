@@ -1,6 +1,14 @@
+import {
+  aboutMeComponent,
+  homeComponent,
+  pageNotFoundComponent
+} from "./components.js";
+
 const Renderer = {
   init: function () {
     console.log("renderer init function");
+    // register views
+    registerViews();
     // handle location changed
     window.addEventListener("locationChanged", handleWindowLocationChanged);
   }
@@ -8,9 +16,7 @@ const Renderer = {
 
 export default Renderer;
 
-const routeViewRenderers = {
-  routeNotFound: pageNotFoundView
-};
+const routeViewRenderers = {};
 
 function handleWindowLocationChanged(event) {
   renderMainView();
@@ -28,11 +34,20 @@ function matchRouteToView(route) {
     Object.keys(routeViewRenderers).find((x) => x.includes(route)) ??
     "routeNotFound";
 
+  // the code above will return
+  // key for home in case pf the
+  // /techFriday/1/ roure
+
   const viewRenderer = routeViewRenderers[rendererKey];
 
-  return viewRenderer;
+  return viewRenderer ?? pageNotFoundComponent;
 }
 
-function pageNotFoundView(parentNode) {
-  parentNode.textContent = "Page not found";
+function registerViews() {
+  registerView("/techFriday/1/home", homeComponent);
+  registerView("/techFriday/1/aboutMe", aboutMeComponent);
+}
+
+function registerView(route, renderFunction) {
+  routeViewRenderers[route] = renderFunction;
 }
