@@ -16,11 +16,30 @@ const cookieSettings = {
 
 const app = express();
 
+if (cookieSettings.enabled) {
+  app.use(cookieParser());
+}
+
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  if (!req.cookies) res.send("cookies are disabled");
+
+  if (req.cookies.username) {
+    res.redirect("/profile");
+  }
+
+  if (!req.cookies.username) {
+    res.redirect("/login");
+  }
+});
+
+app.get("/login", (req, res) => {
+  res.send("login page");
+});
+
+app.get("/profile", (req, res) => {
+  res.send("profile page");
 });
 
 app.listen(port, () => {
   console.log(`web-security app's backend part is listening on port ${port}`);
-  console.log("cookie settings", cookieSettings);
 });
