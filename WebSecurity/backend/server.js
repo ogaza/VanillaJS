@@ -1,22 +1,12 @@
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
 import express from "express";
+import { appConfig, cookiesConfig } from "./config.js";
 
-// dotenv enables the usage of the .env file
-dotenv.config();
-
-const {
-  env: { USE_COOKIES, COOKIE_ENCRYPTION_SECRET, PORT: port = 3030 }
-} = process;
-
-const cookieSettings = {
-  enabled: USE_COOKIES == "true",
-  secret: COOKIE_ENCRYPTION_SECRET
-};
+const { port } = appConfig;
 
 const app = express();
 
-if (cookieSettings.enabled) {
+if (cookiesConfig.enabled) {
   app.use(cookieParser());
 }
 
