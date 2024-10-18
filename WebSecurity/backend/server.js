@@ -3,6 +3,7 @@ import express from "express";
 import { readFile } from "fs/promises";
 import { appConfig, cookiesConfig } from "./config.js";
 import { userIsLoggedIn } from "./security/security.js";
+import { useMyApi } from "./api/api.js";
 
 const { port } = appConfig;
 
@@ -11,6 +12,8 @@ const app = express();
 if (cookiesConfig.enabled) {
   app.use(cookieParser());
 }
+app.use(express.static("./"));
+useMyApi(app);
 
 app.get("/", (req, res) => {
   // if (!req.cookies) {
