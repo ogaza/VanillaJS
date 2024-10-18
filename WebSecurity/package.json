@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "sdevtart": "node backend/server.js",
-    "dev": "nodemon backend/server.js"
+    "dev": "nodemon backend/server.js",
+    "client-dev": "nodemon frontend/server.js"
   },
   "keywords": [],
   "type": "module",
