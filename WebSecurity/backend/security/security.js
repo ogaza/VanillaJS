@@ -1,3 +1,3 @@
 export function userIsLoggedIn(req) {
-  return !!req.cookies.username;
+  return !!req.signedCookies.username;
 }

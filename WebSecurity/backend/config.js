@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const {
-  env: { USE_COOKIES, COOKIE_ENCRYPTION_SECRET, PORT }
+  env: { USE_COOKIES, COOKIE_ENCRYPTION_SECRET, PORT, NODE_ENV }
 } = process;
 
 export const cookiesConfig = {
@@ -13,5 +13,6 @@ export const cookiesConfig = {
 };
 
 export const appConfig = {
+  env: NODE_ENV,
   port: PORT || 3000
 };

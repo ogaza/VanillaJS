@@ -12,7 +12,7 @@ export function useMyApi(app) {
 
 function createUserInfoFrom(req) {
   const {
-    cookies: { username: name }
+    signedCookies: { username: name }
   } = req;
 
   return { user: { name } };

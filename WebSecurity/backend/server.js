@@ -9,7 +9,7 @@ const { port } = appConfig;
 const app = express();
 
 if (cookiesConfig.enabled) {
-  app.use(cookieParser());
+  app.use(cookieParser(cookiesConfig.secret));
 }
 app.use(express.static("./"));
 useMyApi(app);

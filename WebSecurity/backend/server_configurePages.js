@@ -1,5 +1,6 @@
 import { readFile } from "fs/promises";
 import { userIsLoggedIn } from "./security/security.js";
+import { appConfig } from "./config.js";
 
 export function configurePages(app) {
   app.get("/", (req, res) => {
@@ -31,8 +32,12 @@ export function configurePages(app) {
 
   // Simulate user login and set a cookie
   app.post("/login", async (req, res) => {
+    console.log("appConfig", appConfig);
+
     res.cookie("username", "test", {
-      httpOnly: true
+      httpOnly: true,
+      secure: appConfig.env === "prod",
+      signed: true
     });
 
     res.redirect("/profile");
