@@ -1,3 +1,5 @@
+import { getUserById } from "../database.js";
+import { getActiveSessionFor } from "../database_sessions.js";
 import { userIsLoggedIn } from "../security/security.js";
 
 export function useMyApi(app) {
@@ -12,8 +14,11 @@ export function useMyApi(app) {
 
 function createUserInfoFrom(req) {
   const {
-    signedCookies: { username: name }
+    signedCookies: { session: sessionId }
   } = req;
 
-  return { user: { name } };
+  const { userId } = getActiveSessionFor(sessionId) || {};
+  const { id, username } = getUserById(userId);
+
+  return { user: { id, username } };
 }

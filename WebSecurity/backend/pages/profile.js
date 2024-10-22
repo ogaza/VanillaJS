@@ -15,6 +15,6 @@ async function getData() {
   showUserData(user);
 }
 
-function showUserData({ name }) {
-  document.querySelector("body").append(`Welcome  '${name}'`);
+function showUserData({ username }) {
+  document.querySelector("body").append(`Welcome  '${username}'`);
 }

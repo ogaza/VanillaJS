@@ -2,6 +2,11 @@ import { readFile } from "fs/promises";
 import { userIsLoggedIn } from "./security/security.js";
 import { appConfig } from "./config.js";
 import { getUser } from "./database.js";
+import {
+  clearSessionFor,
+  createNewSessionFor,
+  getActiveSessionFor
+} from "./database_sessions.js";
 
 export function configurePages(app) {
   app.get("/", (req, res) => {
@@ -41,7 +46,9 @@ export function configurePages(app) {
       return;
     }
 
-    res.cookie("username", username, {
+    const session = createNewSessionFor(user.id);
+
+    res.cookie("session", session.id, {
       httpOnly: true,
       secure: appConfig.env === "prod",
       signed: true
@@ -50,8 +57,13 @@ export function configurePages(app) {
     res.redirect("/profile");
   });
 
-  app.post("/logout", (_, res) => {
-    res.clearCookie("username");
+  app.post("/logout", (req, res) => {
+    const sessionId = req?.signedCookies?.session;
+
+    const { userId: id } = getActiveSessionFor(sessionId) || {};
+    clearSessionFor(id);
+
+    res.clearCookie("session");
     res.redirect("/login");
   });
 
