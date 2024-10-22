@@ -1,6 +1,7 @@
 import { readFile } from "fs/promises";
 import { userIsLoggedIn } from "./security/security.js";
 import { appConfig } from "./config.js";
+import { getUser } from "./database.js";
 
 export function configurePages(app) {
   app.get("/", (req, res) => {
@@ -32,9 +33,15 @@ export function configurePages(app) {
 
   // Simulate user login and set a cookie
   app.post("/login", async (req, res) => {
-    console.log("appConfig", appConfig);
+    const { username, password } = req.body;
+    const user = getUser({ username, password });
 
-    res.cookie("username", "test", {
+    if (!user) {
+      res.status(403).redirect("/login?&error=Invalid login credentials");
+      return;
+    }
+
+    res.cookie("username", username, {
       httpOnly: true,
       secure: appConfig.env === "prod",
       signed: true
