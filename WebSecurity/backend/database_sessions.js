@@ -1,4 +1,5 @@
-var sessionId = 1;
+import crypto from "crypto";
+
 const sessionDurationInMinutes = 20;
 const sessionDurationInSeconds = 30;
 export let sessions = [
@@ -31,8 +32,15 @@ export function createNewSessionFor(userId) {
   expires.setSeconds(expires.getSeconds() + sessionDurationInSeconds);
   // expires.setMinutes(expires.getMinutes() + sessionDurationInMinutes);
 
-  const session = { id: sessionId, userId, token: sessionId, created, expires };
-  sessionId++;
+  const id = generateSessionId();
+
+  const session = {
+    id: id,
+    userId,
+    token: id,
+    created,
+    expires
+  };
   sessions.push(session);
 
   return session;
@@ -42,4 +50,8 @@ export function clearSessionFor(userId) {
   const filtered = sessions.filter((x) => x.userId != userId);
 
   sessions = [...filtered];
+}
+
+function generateSessionId() {
+  return crypto.randomBytes(16).toString("hex");
 }
