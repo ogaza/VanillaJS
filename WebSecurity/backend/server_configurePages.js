@@ -1,6 +1,6 @@
 import { readFile } from "fs/promises";
 import { userIsLoggedIn } from "./security/security.js";
-import { appConfig } from "./config.js";
+import { isProdEnv } from "./config.js";
 import { getUser } from "./database.js";
 import {
   clearSessionFor,
@@ -39,18 +39,19 @@ export function configurePages(app) {
   // Simulate user login and set a cookie
   app.post("/login", async (req, res) => {
     const { username, password } = req.body;
-    const user = getUser({ username, password });
+    const { id: userId } = getUser({ username, password });
 
-    if (!user) {
+    if (!userId) {
       res.status(403).redirect("/login?&error=Invalid login credentials");
       return;
     }
 
-    const session = createNewSessionFor(user.id);
+    const { id: sessionId } = createNewSessionFor(userId);
 
-    res.cookie("session", session.id, {
+    const useSecureCookie = isProdEnv();
+    res.cookie("session", sessionId, {
       httpOnly: true,
-      secure: appConfig.env === "prod",
+      secure: useSecureCookie,
       signed: true
     });
 

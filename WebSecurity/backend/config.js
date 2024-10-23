@@ -16,3 +16,7 @@ export const appConfig = {
   env: NODE_ENV,
   port: PORT || 3000
 };
+
+export function isProdEnv() {
+  return appConfig.env == "prod";
+}
