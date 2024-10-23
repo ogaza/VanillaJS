@@ -4,11 +4,12 @@ import { userIsLoggedIn } from "../security/security.js";
 
 export function useMyApi(app) {
   app.get("/api", async (req, res) => {
-    if (userIsLoggedIn(req)) {
-      res.send(JSON.stringify(createUserInfoFrom(req)));
+    if (!userIsLoggedIn(req)) {
+      res.status(403);
       return;
     }
-    res.status(403);
+
+    res.send(JSON.stringify(createUserInfoFrom(req)));
   });
 }
 
