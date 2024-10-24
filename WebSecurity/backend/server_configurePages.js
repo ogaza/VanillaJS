@@ -1,5 +1,5 @@
 import { readFile } from "fs/promises";
-import { userIsLoggedIn } from "./security/security.js";
+import { hasActiveSessionCookie } from "./security/security.js";
 import { isProdEnv } from "./config.js";
 import { getUser } from "./database.js";
 import {
@@ -15,19 +15,19 @@ export function configurePages(app) {
     //   return;
     // }
 
-    if (userIsLoggedIn(req)) {
+    if (hasActiveSessionCookie(req)) {
       res.redirect("/profile");
       return;
     }
 
-    if (!userIsLoggedIn(req)) {
+    if (!hasActiveSessionCookie(req)) {
       res.redirect("/login");
       return;
     }
   });
 
   app.get("/login", async (req, res) => {
-    if (userIsLoggedIn(req)) {
+    if (hasActiveSessionCookie(req)) {
       res.redirect("/profile");
       return;
     }
@@ -69,7 +69,7 @@ export function configurePages(app) {
   });
 
   app.get("/profile", async (req, res) => {
-    if (!userIsLoggedIn(req)) {
+    if (!hasActiveSessionCookie(req)) {
       res.redirect("/login");
       return;
     }

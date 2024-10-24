@@ -1,10 +1,10 @@
 import { getUserById } from "../database.js";
 import { getActiveSessionFor } from "../database_sessions.js";
-import { userIsLoggedIn } from "../security/security.js";
+import { hasActiveSessionCookie } from "../security/security.js";
 
 export function useMyApi(app) {
   app.get("/api", async (req, res) => {
-    if (!userIsLoggedIn(req)) {
+    if (!hasActiveSessionCookie(req)) {
       res.status(403);
       return;
     }
