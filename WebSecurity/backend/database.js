@@ -1,15 +1,15 @@
 const users = [{ id: 1, username: "olaf", password: "passw0rd" }];
 
 export function getUser(user) {
-  const existingUser = users.find(getComparerTo(user));
+  const { id, username } = users.find(getComparerTo(user));
 
-  return { ...existingUser };
+  return { id, username };
 }
 
 export function getUserById(userId) {
-  const existingUser = users.find((x) => x.id == userId);
+  const { id, username } = users.find((x) => x.id == userId);
 
-  return { ...existingUser };
+  return { id, username };
 }
 
 function getComparerTo(userOne) {
