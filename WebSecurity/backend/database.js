@@ -1,7 +1,7 @@
 const users = [{ id: 1, username: "olaf", password: "passw0rd" }];
 
 export function getUser(user) {
-  const { id, username } = users.find(getComparerTo(user));
+  const { id, username } = users.find(getComparerTo(user)) || {};
 
   return { id, username };
 }
