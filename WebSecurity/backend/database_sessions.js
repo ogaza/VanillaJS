@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { v4 as uuid } from "uuid";
 
 const sessionDurationInMinutes = 20;
 const sessionDurationInSeconds = 30;
@@ -31,13 +32,14 @@ export function createNewSessionFor(userId) {
 
   expires.setSeconds(expires.getSeconds() + sessionDurationInSeconds);
   // expires.setMinutes(expires.getMinutes() + sessionDurationInMinutes);
-
   const id = generateSessionId();
+
+  var csrf_token = uuid();
 
   const session = {
     id: id,
     userId,
-    token: id,
+    csrf_token,
     created,
     expires
   };

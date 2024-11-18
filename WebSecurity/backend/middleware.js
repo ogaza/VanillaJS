@@ -38,3 +38,34 @@ export const authenticate = async (req, res, next) => {
 
   next();
 };
+
+export const checkCsrfToken = async (req, res, next) => {
+  const { method, url } = req;
+
+  // skip if not a login request of anykind
+  // probably could be better
+  // if session is created (with the csfr token)
+  // even before an user is logged in
+  if (url.includes("/login")) {
+    return next();
+  }
+
+  if (method !== "POST") {
+    return next();
+  }
+
+  const { session: sessionId } = req.signedCookies;
+
+  const { csrf_token } = getActiveSessionFor(sessionId) || {};
+
+  // this needs to be refined probably
+  // but anyway, here we check if the body
+  // of a post request has the csfr token
+  // if not, then the server should respond
+  // with 'unauthorized' response
+  if (!req._csrf !== csrf_token) {
+    return res.status(403).send("Unauthorized");
+  }
+
+  next();
+};

@@ -4,7 +4,7 @@ import express from "express";
 import { appConfig, cookiesConfig } from "./config.js";
 import { useMyApi } from "./api/api.js";
 import { configurePages } from "./server_configurePages.js";
-import { currentUser } from "./middleware.js";
+import { currentUser, checkCsrfToken } from "./middleware.js";
 
 const { port } = appConfig;
 
@@ -16,6 +16,7 @@ if (cookiesConfig.enabled) {
   app.use(cookieParser(cookiesConfig.secret));
 }
 app.use(currentUser);
+app.use(checkCsrfToken);
 app.use(express.static("./"));
 useMyApi(app);
 
