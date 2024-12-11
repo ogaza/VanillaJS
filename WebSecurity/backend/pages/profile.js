@@ -30,7 +30,7 @@ async function postData() {
   const response = await fetch(url, { method: "POST" });
 
   if (!response.ok) {
-    console.log("fetch failed");
+    console.log("fetch failed as expected due to the lack of the csrf token");
     return;
   }
 }
