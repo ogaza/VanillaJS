@@ -38,10 +38,12 @@ export function configurePages(app) {
     // -------------------------------
     // jwt cookie
     const { secret: jwtEncryptionSecret } = jwtConfig;
-    var token = jwt.sign({ username }, jwtEncryptionSecret);
+    var token = jwt.sign({ username }, jwtEncryptionSecret, {
+      expiresIn: "20s"
+    });
 
-    console.log("jwtEncryptionSecret: ", jwtEncryptionSecret);
-    console.log("token: ", token);
+    // console.log("jwtEncryptionSecret: ", jwtEncryptionSecret);
+    // console.log("token: ", token);
 
     // in production the token cookie
     // should be httpOnly, secured and signed
@@ -58,6 +60,14 @@ export function configurePages(app) {
     res.redirect("/jwt_sample/profile");
   });
 
+  app.get("/tokenSecuredTest", authenticateMiddleware, (req, res) => {
+    res.send(
+      JSON.stringify({
+        jwtTokenTestResult: "success"
+      })
+    );
+  });
+
   // app.post("/logout", authenticate, (req, res) => {
   //   const { id } = req?.user || {};
   //   clearSessionFor(id);
@@ -65,4 +75,55 @@ export function configurePages(app) {
   //   res.clearCookie("session");
   //   res.redirect("/login");
   // });
+}
+
+async function authenticateMiddleware(req, res, next) {
+  const jwtToken = req?.cookies?.token;
+  //  const jwtToken = req?.signedCookies?.token;
+
+  console.log("jwtToken from request: ", jwtToken);
+
+  const { secret: jwtEncryptionSecret } = jwtConfig;
+
+  let verificationResult;
+  try {
+    verificationResult = jwt.verify(jwtToken, jwtEncryptionSecret, {
+      algorithms: ["HS256"]
+    });
+  } catch (error) {
+    console.log("error during token verification", error.message);
+  }
+
+  const { username } = verificationResult || {};
+  console.log("username from token: ", username);
+
+  if (!username) {
+    // return res.status(403).send("Unauthorized");
+    return res
+      .status(401)
+      .redirect(
+        `/jwt_sample/login?redirect=${req.originalUrl}&error=unauthorized`
+      );
+  }
+
+  next();
+
+  // verificationResult = jwt.verify(
+  //   jwtToken,
+  //   jwtEncryptionSecret,
+  //   function (err, decoded) {
+  //     console.log("decoded token: ", decoded);
+
+  //     if (err) {
+  //       console.log("error during token verification", err);
+
+  //       /*
+  //       err = {
+  //         name: 'JsonWebTokenError',
+  //         message: 'jwt malformed'
+  //       }
+  //       */
+  //     }
+  //   }
+  // );
 }
