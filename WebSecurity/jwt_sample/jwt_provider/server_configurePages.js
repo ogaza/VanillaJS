@@ -57,7 +57,7 @@ export function configurePages(app) {
 
     // -------------------------------
     // end request with redirection
-    res.redirect("/jwt_sample/profile");
+    res.redirect("/jwt_sample/jwt_provider/profile");
   });
 
   app.get("/tokenSecuredTest", authenticateMiddleware, (req, res) => {
@@ -102,7 +102,7 @@ async function authenticateMiddleware(req, res, next) {
     return res
       .status(401)
       .redirect(
-        `/jwt_sample/login?redirect=${req.originalUrl}&error=unauthorized`
+        `/jwt_sample/jwt_provider/login?redirect=${req.originalUrl}&error=unauthorized`
       );
   }
 

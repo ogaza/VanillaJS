@@ -7,7 +7,8 @@
     "sdevtart": "node backend/server.js",
     "dev": "nodemon backend/server.js",
     "client-dev": "nodemon frontend/server.js",
-    "jwt-sample-dev": "nodemon jwt_sample/server.js"
+    "jwt-provider-dev": "nodemon jwt_sample/jwt_provider/server.js",
+    "jwt-client-dev": "nodemon jwt_sample/jwt_client/server.js"
   },
   "keywords": [],
   "type": "module",
