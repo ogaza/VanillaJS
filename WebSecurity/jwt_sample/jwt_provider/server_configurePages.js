@@ -57,7 +57,7 @@ export function configurePages(app) {
 
     // -------------------------------
     // end request with redirection
-    res.redirect("/jwt_sample/jwt_provider/profile");
+    res.redirect("http://localhost:5504/profile");
   });
 
   app.get("/tokenSecuredTest", authenticateMiddleware, (req, res) => {

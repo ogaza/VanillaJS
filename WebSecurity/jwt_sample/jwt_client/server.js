@@ -1,4 +1,3 @@
-import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import express from "express";
@@ -17,20 +16,18 @@ app.use(
     useDefaults: true,
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      formAction: ["'self'", "http://localhost:5504"]
+      scriptSrc: ["'self'"]
     }
   })
 );
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
 if (cookiesConfig.enabled) {
   app.use(cookieParser(cookiesConfig.secret));
 }
-app.use(express.static("./jwt_sample/jwt_provider/"));
+app.use(express.static("./jwt_sample/jwt_client/"));
 
 configurePages(app);
 
 app.listen(port, () => {
-  console.log(`web-security - jwt provider app - listening on port ${port}`);
+  console.log(`web-security - jwt client app - listening on port ${port}`);
 });
