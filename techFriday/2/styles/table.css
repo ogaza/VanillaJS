@@ -16,10 +16,15 @@ td {
 
 table,
 thead,
-tbody,
 th,
 tr {
   display: block;
+}
+
+tbody {
+  display: flex;
+  flex-flow: column;
+  row-gap: 1rem;
 }
 
 td {
