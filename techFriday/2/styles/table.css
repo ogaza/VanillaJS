@@ -27,3 +27,13 @@ td {
   flex-flow: row wrap;
   padding: 0.5rem;
 }
+
+/* 
+  Hide table headers (but not display: none;, 
+  for accessibility) 
+*/
+thead tr {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
