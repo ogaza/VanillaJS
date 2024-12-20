@@ -9,3 +9,21 @@ tr {
 td {
   padding: 0.5rem;
 }
+
+.tablescroll {
+  overflow-x: auto;
+}
+
+table,
+thead,
+tbody,
+th,
+tr {
+  display: block;
+}
+
+td {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0.5rem;
+}
