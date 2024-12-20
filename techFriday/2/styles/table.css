@@ -87,3 +87,32 @@ td:nth-of-type(10):before {
 td:nth-of-type(11):before {
   content: "Global Magnetic Field?";
 }
+
+@media screen and (min-width: 768px) {
+  td:nth-of-type(n):before {
+    content: "";
+    margin-right: 0;
+  }
+
+  thead tr {
+    position: static;
+  }
+
+  thead,
+  tbody {
+    display: table-row-group;
+  }
+  th,
+  td {
+    display: table-cell;
+    padding: 0.5rem;
+  }
+
+  table {
+    display: table;
+  }
+
+  tr {
+    display: table-row;
+  }
+}
